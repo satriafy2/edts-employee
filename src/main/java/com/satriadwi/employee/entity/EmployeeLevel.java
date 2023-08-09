@@ -1,4 +1,4 @@
-package com.satriadwi.employee.model;
+package com.satriadwi.employee.entity;
 
 import java.util.List;
 
@@ -34,4 +34,8 @@ public class EmployeeLevel extends BaseModel{
 
     @OneToMany(mappedBy = "level")
     private List<Employee> employees;
+
+    public EmployeeLevel(Integer id) {
+        this.id = id;
+    }
 }

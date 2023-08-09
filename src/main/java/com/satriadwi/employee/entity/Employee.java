@@ -1,4 +1,4 @@
-package com.satriadwi.employee.model;
+package com.satriadwi.employee.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

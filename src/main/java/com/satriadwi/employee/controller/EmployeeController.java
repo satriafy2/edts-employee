@@ -2,6 +2,8 @@ package com.satriadwi.employee.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.satriadwi.employee.entity.Employee;
+import com.satriadwi.employee.dto.EmployeeDto;
 import com.satriadwi.employee.entity.EmployeeView;
 import com.satriadwi.employee.service.EmployeeService;
 
@@ -29,8 +31,8 @@ public class EmployeeController {
     }
 
     @PostMapping("/employee")
-    public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
-        Employee createdEmployee = employeeService.saveEmployee(employee);
+    public ResponseEntity<?> createEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
+        EmployeeView createdEmployee = employeeService.saveEmployee(employeeDto);
         return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
 

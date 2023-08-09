@@ -6,9 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.satriadwi.employee.dto.EmployeeDto;
 import com.satriadwi.employee.entity.Employee;
+import com.satriadwi.employee.entity.EmployeeLevel;
 import com.satriadwi.employee.entity.EmployeeView;
+import com.satriadwi.employee.repository.EmployeeLevelRepository;
 import com.satriadwi.employee.repository.EmployeeRepository;
 
 @Service
@@ -17,20 +21,31 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private EmployeeLevelRepository employeeLevelRepository;
+
     @Override
-    public Employee saveEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+    public EmployeeView saveEmployee(EmployeeDto employeeDto) {
+        EmployeeLevel employeeLevel = employeeLevelRepository
+            .findById(employeeDto.getLevel())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee level not found."));
+        
+        Employee employee = new Employee();
+        employee.setName(employeeDto.getName());
+        employee.setSalary(employeeDto.getSalary());
+        employee.setLevel(employeeLevel);
+        employeeRepository.save(employee);
+
+        return employeeRepository.findById(employee.getId(), EmployeeView.class);
     }
 
     @Override
     public List<EmployeeView> fetchEmployees() {
         return employeeRepository.findByDeletedAtIsNull();
-        // return employeeRepository.findAll();
     }
 
     @Override
     public Employee updateEmployee(Employee employee, Long employeeId) {
-        // EmployeeView createdEmployee = employeeRepository.save(employee);
         return employeeRepository.save(employee);
     }
 

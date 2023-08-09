@@ -11,5 +11,5 @@ import com.satriadwi.employee.entity.EmployeeView;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<EmployeeView> findByDeletedAtIsNull();
-    // List<EmployeeView> findAll();
+    <T> T findById(Long employeeId, Class<T> type);
 }

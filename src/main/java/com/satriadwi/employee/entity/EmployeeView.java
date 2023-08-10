@@ -5,4 +5,14 @@ public interface EmployeeView {
     String getName();
     Double getSalary();
     EmployeeLevelView getLevel();
+
+    default Double getSalaryBonus() {
+        Double salary = getSalary();
+        Float percentage = getLevel().getBonusPercentage();
+        return salary * (percentage / 100);
+    }
+
+    default Double getSalaryTotal() {
+        return getSalary() + getSalaryBonus();
+    }
 }

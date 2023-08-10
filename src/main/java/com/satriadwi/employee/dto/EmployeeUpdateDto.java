@@ -1,6 +1,5 @@
 package com.satriadwi.employee.dto;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
@@ -8,9 +7,8 @@ import org.hibernate.validator.constraints.Range;
 import lombok.Data;
 
 @Data
-public class EmployeeDto {
+public class EmployeeUpdateDto {
 
-    @NotEmpty
     @Size(min = 2, max = 64, message = "Employee name should between 2-64 characters")
     private String name;
 
@@ -19,3 +17,4 @@ public class EmployeeDto {
 
     private Integer level;
 }
+

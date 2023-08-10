@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.satriadwi.employee.dto.EmployeeDto;
+import com.satriadwi.employee.dto.EmployeeUpdateDto;
 import com.satriadwi.employee.entity.Employee;
 import com.satriadwi.employee.entity.EmployeeLevel;
 import com.satriadwi.employee.entity.EmployeeView;
@@ -45,8 +46,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployee(Employee employee, Long employeeId) {
-        return employeeRepository.save(employee);
+    public EmployeeView updateEmployee(EmployeeUpdateDto employeeUpdateDto, Long employeeId) {
+        Employee employee = employeeRepository
+            .findById(employeeId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found."));
+
+        if (employeeUpdateDto.getLevel() != null) {
+            EmployeeLevel employeeLevel = employeeLevelRepository
+                .findById(employeeUpdateDto.getLevel())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee level not found."));
+            
+            employee.setLevel(employeeLevel);
+        }
+
+        if (employeeUpdateDto.getName() != null) employee.setName(employeeUpdateDto.getName());
+        if (employeeUpdateDto.getSalary() != null) employee.setSalary(employeeUpdateDto.getSalary());
+        employeeRepository.save(employee);
+
+        return employeeRepository.findById(employee.getId(), EmployeeView.class);
     }
 
     @Override

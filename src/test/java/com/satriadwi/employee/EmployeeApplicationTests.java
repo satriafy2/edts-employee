@@ -52,4 +52,15 @@ class EmployeeApplicationTests {
 		assertEquals(employee.getSalary(), JsonPath.read(content, "salary"));
 	}
 
+	@Test
+	void successGetEmployees() throws Exception {
+		RequestBuilder request = MockMvcRequestBuilders
+			.get("/employee")
+			.accept(MediaType.APPLICATION_JSON);
+		
+		mockMvc.perform(request)
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON));
+	}
+
 }

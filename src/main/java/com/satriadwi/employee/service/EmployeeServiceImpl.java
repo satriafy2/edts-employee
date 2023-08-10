@@ -1,6 +1,6 @@
 package com.satriadwi.employee.service;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +71,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = employeeRepository.findById(employeeId).get();
         if (employee == null) return HttpStatus.NOT_FOUND;
 
-        employee.setDeletedAt(LocalTime.now());
+        employee.setDeletedAt(LocalDateTime.now());
         employeeRepository.save(employee);
         return HttpStatus.OK;
     }

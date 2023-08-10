@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +32,7 @@ public class Employee extends BaseModel {
     @Column(length = 64)
     private String name;
     private Double salary;
-    private LocalTime deletedAt = null;
+    private LocalDateTime deletedAt = null;
     
     @JsonBackReference
     @ManyToOne
